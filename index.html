@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearFlip Automobiles | Find, Buy & Sell Verified Cars in India</title>
+    <meta name="description" content="India's leading automobile marketplace for buying and selling verified used cars, bikes, electric vehicles, and spare parts.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+
+        <div class="logo" onclick="resetAllAndHome()" style="cursor: pointer;">
+            <div class="logo-icon">⚙</div>
+            <div>
+                <h1>Gear<span>Flip</span></h1>
+                <p>Find. Buy. Drive.</p>
+            </div>
+        </div>
+
+        <!-- Location Selector -->
+        <div class="location" id="locationBtn" onclick="openLocationModal()">
+            <span class="loc-pin">📍</span>
+            <span id="currentLocationText">All India</span>
+            <span class="chevron">⌄</span>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by brand, model, city, or keyword..."
+                autocomplete="off"
+            >
+            <button id="searchBtn" onclick="triggerSearch()" title="Search">🔍</button>
+        </div>
+
+        <!-- User Options -->
+        <div class="user-options">
+
+            <div class="user-item" onclick="openWishlistModal()" title="View Wishlist">
+                <span class="user-icon wishlist-icon-wrapper">
+                    ♡
+                    <span class="badge" id="wishlistCount">0</span>
+                </span>
+                <small>Wishlist</small>
+            </div>
+
+            <div class="user-item" id="userAccountBtn" onclick="openAuthModal()" title="User Account">
+                <span class="user-icon" id="userAvatarIcon">♙</span>
+                <small id="userAccountText">Login</small>
+            </div>
+
+            <button class="sell-btn" onclick="openSellModal()">
+                ＋ Sell Vehicle
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= NAVIGATION ================= -->
+    <nav class="navigation">
+
+        <button class="category-btn" onclick="filterByCategory('All')">
+            ☰ &nbsp; ALL CATEGORIES
+            <span>⌄</span>
+        </button>
+
+        <a class="nav-link active" onclick="filterByCategory('Cars', this)">Cars</a>
+        <a class="nav-link" onclick="filterByCategory('Bikes', this)">Bikes</a>
+        <a class="nav-link" onclick="filterByCategory('Commercial', this)">Commercial</a>
+        <a class="nav-link" onclick="filterByCategory('Electric Vehicles', this)">Electric Vehicles</a>
+        <a class="nav-link" onclick="filterByCategory('Spare Parts', this)">Spare Parts</a>
+        <a class="nav-link" onclick="filterByCategory('Accessories', this)">Accessories</a>
+
+    </nav>
+
+
+    <!-- ================= VEHICLE BODY TYPES ================= -->
+    <section class="vehicle-types" id="vehicleTypesContainer">
+
+        <div class="vehicle-type selected" onclick="filterByBodyType('All Cars', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/BMW_330i_%28G20%29_Washington_DC_Metro_Area%2C_USA.jpg/300px-BMW_330i_%28G20%29_Washington_DC_Metro_Area%2C_USA.jpg" alt="All Cars">
+            </div>
+            <p>All Cars</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Hatchback', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/2022_Maruti_Suzuki_Baleno_Alpha_%28India%29_front_view.jpg/300px-2022_Maruti_Suzuki_Baleno_Alpha_%28India%29_front_view.jpg" alt="Hatchback">
+            </div>
+            <p>Hatchback</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Sedan', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Honda_City_2020.jpg/300px-Honda_City_2020.jpg" alt="Sedan">
+            </div>
+            <p>Sedan</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('SUV', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/2021_Hyundai_Creta_SX%28O%29_CRDi_%28India%29_front_view.jpg/300px-2021_Hyundai_Creta_SX%28O%29_CRDi_%28India%29_front_view.jpg" alt="SUV">
+            </div>
+            <p>SUV</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Premium', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/2021_Audi_A6.jpg/300px-2021_Audi_A6.jpg" alt="Premium">
+            </div>
+            <p>Premium</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Luxury', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Mercedes-Benz_C200_AVANTGARDE_%28W205%29_front.JPG/300px-Mercedes-Benz_C200_AVANTGARDE_%28W205%29_front.JPG" alt="Luxury">
+            </div>
+            <p>Luxury</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Electric', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/2020_Tata_Nexon_EV_%28India%29_front_view.png/300px-2020_Tata_Nexon_EV_%28India%29_front_view.png" alt="Electric">
+            </div>
+            <p>Electric</p>
+        </div>
+
+        <div class="vehicle-type" onclick="filterByBodyType('Old Cars', this)">
+            <div class="type-image">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/The_Classic_Ambassador_on_an_early_sunrise.jpg/300px-The_Classic_Ambassador_on_an_early_sunrise.jpg" alt="Old Cars">
+            </div>
+            <p>Old Cars</p>
+        </div>
+
+    </section>
+
+
+    <!-- ================= DYNAMIC FILTER SECTION ================= -->
+    <section class="filter-box">
+
+        <!-- Location Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('locationDropdown')">
+                <span>📍</span>
+                <span id="filterLocationLabel">Location</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="locationDropdown">
+                <div class="dropdown-item active" onclick="selectFilter('location', '', 'Location')">All Locations</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Bangalore', 'Bangalore')">Bangalore</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Mumbai', 'Mumbai')">Mumbai</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Pune', 'Pune')">Pune</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Hyderabad', 'Hyderabad')">Hyderabad</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Chennai', 'Chennai')">Chennai</div>
+                <div class="dropdown-item" onclick="selectFilter('location', 'Delhi', 'Delhi NCR')">Delhi NCR</div>
+            </div>
+        </div>
+
+        <!-- Brand Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('brandDropdown')">
+                <span>🚗</span>
+                <span id="filterBrandLabel">Brand</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="brandDropdown">
+                <div class="dropdown-item active" onclick="selectFilter('brand', '', 'Brand')">All Brands</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Maruti Suzuki', 'Maruti Suzuki')">Maruti Suzuki</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Hyundai', 'Hyundai')">Hyundai</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Tata', 'Tata')">Tata Motors</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Honda', 'Honda')">Honda</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Mahindra', 'Mahindra')">Mahindra</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'BMW', 'BMW')">BMW</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Mercedes-Benz', 'Mercedes-Benz')">Mercedes-Benz</div>
+                <div class="dropdown-item" onclick="selectFilter('brand', 'Audi', 'Audi')">Audi</div>
+            </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('priceDropdown')">
+                <span>₹</span>
+                <span id="filterPriceLabel">Price</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="priceDropdown">
+                <div class="dropdown-item active" onclick="selectPriceFilter('', '', 'Price')">Any Price</div>
+                <div class="dropdown-item" onclick="selectPriceFilter(0, 500000, 'Under ₹5 Lakh')">Under ₹5 Lakh</div>
+                <div class="dropdown-item" onclick="selectPriceFilter(500000, 1000000, '₹5 - ₹10 Lakh')">₹5 - ₹10 Lakh</div>
+                <div class="dropdown-item" onclick="selectPriceFilter(1000000, 2000000, '₹10 - ₹20 Lakh')">₹10 - ₹20 Lakh</div>
+                <div class="dropdown-item" onclick="selectPriceFilter(2000000, 10000000, 'Above ₹20 Lakh')">Above ₹20 Lakh</div>
+            </div>
+        </div>
+
+        <!-- Year Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('yearDropdown')">
+                <span>📅</span>
+                <span id="filterYearLabel">Year</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="yearDropdown">
+                <div class="dropdown-item active" onclick="selectFilter('minYear', '', 'Year')">Any Year</div>
+                <div class="dropdown-item" onclick="selectFilter('minYear', '2022', '2022 & Newer')">2022 & Newer</div>
+                <div class="dropdown-item" onclick="selectFilter('minYear', '2020', '2020 & Newer')">2020 & Newer</div>
+                <div class="dropdown-item" onclick="selectFilter('minYear', '2018', '2018 & Newer')">2018 & Newer</div>
+                <div class="dropdown-item" onclick="selectFilter('maxYear', '2015', 'Classic (<2015)')">Classic (<2015)</div>
+            </div>
+        </div>
+
+        <!-- Fuel Type Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('fuelDropdown')">
+                <span>⛽</span>
+                <span id="filterFuelLabel">Fuel Type</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="fuelDropdown">
+                <div class="dropdown-item active" onclick="selectFilter('fuel_type', '', 'Fuel Type')">All Fuels</div>
+                <div class="dropdown-item" onclick="selectFilter('fuel_type', 'Petrol', 'Petrol')">Petrol</div>
+                <div class="dropdown-item" onclick="selectFilter('fuel_type', 'Diesel', 'Diesel')">Diesel</div>
+                <div class="dropdown-item" onclick="selectFilter('fuel_type', 'Electric', 'Electric')">Electric</div>
+                <div class="dropdown-item" onclick="selectFilter('fuel_type', 'CNG', 'CNG')">CNG</div>
+            </div>
+        </div>
+
+        <!-- Transmission Filter -->
+        <div class="filter-dropdown-wrapper">
+            <div class="filter" onclick="toggleDropdown('transmissionDropdown')">
+                <span>⚙</span>
+                <span id="filterTransmissionLabel">Transmission</span>
+                <b>⌄</b>
+            </div>
+            <div class="dropdown-menu" id="transmissionDropdown">
+                <div class="dropdown-item active" onclick="selectFilter('transmission', '', 'Transmission')">All Types</div>
+                <div class="dropdown-item" onclick="selectFilter('transmission', 'Manual', 'Manual')">Manual</div>
+                <div class="dropdown-item" onclick="selectFilter('transmission', 'Automatic', 'Automatic')">Automatic</div>
+            </div>
+        </div>
+
+        <button class="search-btn" onclick="applyFilters()">
+            Search
+        </button>
+
+        <button class="clear-btn" onclick="clearAllFilters()">
+            Clear All
+        </button>
+
+    </section>
+
+
+    <!-- ================= CARS HEADER & CONTROLS ================= -->
+    <section class="cars-header">
+
+        <div>
+            <h2 id="sectionTitle">Vehicles for Sale</h2>
+            <p id="vehicleCountText">Loading inventory...</p>
+        </div>
+
+        <div class="sort-section">
+
+            <select id="sortSelect" onchange="handleSortChange(this.value)">
+                <option value="Newest First">Newest First</option>
+                <option value="Price: Low to High">Price: Low to High</option>
+                <option value="Price: High to Low">Price: High to Low</option>
+                <option value="Year: Newest">Model Year: Newest</option>
+                <option value="KM: Low to High">KM Driven: Lowest</option>
+            </select>
+
+            <button class="view-button active" id="gridViewBtn" onclick="setViewMode('grid')" title="Grid View">▦</button>
+            <button class="view-button" id="listViewBtn" onclick="setViewMode('list')" title="List View">☰</button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= VEHICLE CARDS GRID ================= -->
+    <section class="cars-container" id="carsContainer">
+        <!-- Dynamic Cards rendered via script.js -->
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Fetching certified vehicles from GearFlip database...</p>
+        </div>
+    </section>
+
+
+    <!-- ================= BENEFITS SECTION ================= -->
+    <section class="benefits">
+
+        <div class="benefit">
+            <div class="benefit-icon blue">✓</div>
+            <div>
+                <h3>Verified Listings</h3>
+                <p>100% verified sellers & vehicle inspection</p>
+            </div>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon green">₹</div>
+            <div>
+                <h3>Best Prices</h3>
+                <p>Transparent pricing, 0% hidden charges</p>
+            </div>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon purple">🤝</div>
+            <div>
+                <h3>Easy & Safe</h3>
+                <p>Secure paperwork & instant RC transfer</p>
+            </div>
+        </div>
+
+        <div class="benefit">
+            <div class="benefit-icon orange">☎</div>
+            <div>
+                <h3>Help & Support</h3>
+                <p>24/7 concierge & free roadside assistance</p>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo">
+                    <div class="logo-icon">⚙</div>
+                    <div>
+                        <h1>Gear<span>Flip</span></h1>
+                        <p>Find. Buy. Drive.</p>
+                    </div>
+                </div>
+                <p class="footer-desc">GearFlip is India's most trusted automotive platform to buy, sell, and finance pre-owned certified vehicles with complete peace of mind.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Popular Brands</h4>
+                <a onclick="selectFilter('brand', 'Maruti Suzuki', 'Maruti Suzuki')">Maruti Suzuki</a>
+                <a onclick="selectFilter('brand', 'Hyundai', 'Hyundai')">Hyundai</a>
+                <a onclick="selectFilter('brand', 'Tata', 'Tata Motors')">Tata Motors</a>
+                <a onclick="selectFilter('brand', 'Honda', 'Honda')">Honda</a>
+                <a onclick="selectFilter('brand', 'BMW', 'BMW')">BMW</a>
+            </div>
+            <div class="footer-col">
+                <h4>Popular Cities</h4>
+                <a onclick="selectLocation('Bangalore')">Cars in Bangalore</a>
+                <a onclick="selectLocation('Mumbai')">Cars in Mumbai</a>
+                <a onclick="selectLocation('Delhi')">Cars in Delhi NCR</a>
+                <a onclick="selectLocation('Pune')">Cars in Pune</a>
+                <a onclick="selectLocation('Hyderabad')">Cars in Hyderabad</a>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a onclick="openSellModal()">Sell Your Car</a>
+                <a onclick="openWishlistModal()">My Wishlist</a>
+                <a onclick="openAuthModal()">User Account</a>
+                <a onclick="showToast('Customer Support: +91 8000 123 456', 'info')">Contact Us</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 GearFlip Automobiles Pvt. Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- ================= MODALS ================= -->
+
+    <!-- 1. VEHICLE DETAILS MODAL -->
+    <div class="modal-backdrop" id="vehicleDetailsModal" onclick="handleBackdropClick(event, 'vehicleDetailsModal')">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('vehicleDetailsModal')">✕</button>
+            <div id="vehicleDetailsBody">
+                <!-- Dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 2. SELL VEHICLE MODAL -->
+    <div class="modal-backdrop" id="sellVehicleModal" onclick="handleBackdropClick(event, 'sellVehicleModal')">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('sellVehicleModal')">✕</button>
+            <div class="modal-header">
+                <h2>Sell Your Vehicle on <span>GearFlip</span></h2>
+                <p>Reach over 500,000 verified buyers across India in minutes.</p>
+            </div>
+            <form id="sellVehicleForm" onsubmit="handleSellVehicleSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Vehicle Title / Headline *</label>
+                        <input type="text" id="sellTitle" placeholder="e.g. 2022 Maruti Suzuki Baleno Alpha Petrol" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Brand *</label>
+                        <input type="text" id="sellBrand" placeholder="e.g. Maruti Suzuki, Tata, Hyundai" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Model *</label>
+                        <input type="text" id="sellModel" placeholder="e.g. Baleno, Nexon, Creta" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Manufacturing Year *</label>
+                        <input type="number" id="sellYear" min="1980" max="2026" value="2022" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expected Price (₹ INR) *</label>
+                        <input type="number" id="sellPrice" placeholder="e.g. 750000" min="10000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kilometers Driven *</label>
+                        <input type="number" id="sellKm" placeholder="e.g. 35000" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fuel Type *</label>
+                        <select id="sellFuel">
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Electric">Electric</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Transmission *</label>
+                        <select id="sellTransmission">
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Body Type *</label>
+                        <select id="sellBodyType">
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Premium">Premium</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Old Cars">Old Cars</option>
+                            <option value="Bikes">Bikes</option>
+                            <option value="Commercial">Commercial</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="sellCategory">
+                            <option value="Cars">Cars</option>
+                            <option value="Bikes">Bikes</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Electric Vehicles">Electric Vehicles</option>
+                            <option value="Spare Parts">Spare Parts</option>
+                            <option value="Accessories">Accessories</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>City / Location *</label>
+                        <input type="text" id="sellLocation" placeholder="e.g. Bangalore, Pune, Mumbai" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Image URL (or Unsplash photo link)</label>
+                        <input type="url" id="sellImageUrl" placeholder="https://images.unsplash.com/photo-..." value="">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Description & Condition Notes</label>
+                        <textarea id="sellDescription" rows="3" placeholder="Single owner, full company service record, zero insurance claims..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seller Name *</label>
+                        <input type="text" id="sellSellerName" placeholder="Your Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seller Phone / WhatsApp *</label>
+                        <input type="tel" id="sellSellerPhone" placeholder="+91 98765 43210" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal('sellVehicleModal')">Cancel</button>
+                    <button type="submit" class="btn-primary" id="sellSubmitBtn">Post Vehicle Listing</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 3. WISHLIST MODAL -->
+    <div class="modal-backdrop" id="wishlistModal" onclick="handleBackdropClick(event, 'wishlistModal')">
+        <div class="modal-content modal-medium">
+            <button class="modal-close" onclick="closeModal('wishlistModal')">✕</button>
+            <div class="modal-header">
+                <h2>My Saved Vehicles</h2>
+                <p>Vehicles you have added to your wishlist.</p>
+            </div>
+            <div id="wishlistItemsContainer">
+                <!-- Dynamically loaded wishlist -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 4. AUTH MODAL (Login / Register) -->
+    <div class="modal-backdrop" id="authModal" onclick="handleBackdropClick(event, 'authModal')">
+        <div class="modal-content modal-small">
+            <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+                <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Create Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="yourname@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary full-width" id="loginSubmitBtn">Sign In</button>
+                
+                <div class="demo-auth-box">
+                    <p>Quick Demo Test:</p>
+                    <button type="button" class="demo-login-btn" onclick="fillDemoLogin()">1-Click Demo Login</button>
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;" onsubmit="handleRegisterSubmit(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" placeholder="Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" placeholder="rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="regPhone" placeholder="+91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Create a password (min 6 chars)" minlength="6" required>
+                </div>
+                <button type="submit" class="btn-primary full-width" id="registerSubmitBtn">Create Free Account</button>
+            </form>
+
+            <!-- User Logged In State Profile View -->
+            <div id="userProfileView" style="display: none;">
+                <div class="user-profile-card">
+                    <div class="avatar-large">👤</div>
+                    <h3 id="profileName">User</h3>
+                    <p id="profileEmail">user@example.com</p>
+                    <p id="profilePhone">+91 00000 00000</p>
+                    <div class="profile-stats">
+                        <div class="stat-box">
+                            <strong id="profileWishlistCount">0</strong>
+                            <span>Saved Cars</span>
+                        </div>
+                        <div class="stat-box">
+                            <strong id="profileListingsCount">0</strong>
+                            <span>My Listings</span>
+                        </div>
+                    </div>
+                    <button class="btn-secondary full-width" onclick="handleLogout()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 5. LOCATION PICKER MODAL -->
+    <div class="modal-backdrop" id="locationModal" onclick="handleBackdropClick(event, 'locationModal')">
+        <div class="modal-content modal-small">
+            <button class="modal-close" onclick="closeModal('locationModal')">✕</button>
+            <div class="modal-header">
+                <h2>Select Your City</h2>
+                <p>Find cars and deals available in your city.</p>
+            </div>
+            <div class="city-grid">
+                <div class="city-card" onclick="selectLocation('All India')">
+                    <span class="city-icon">🇮🇳</span>
+                    <strong>All India</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Bangalore')">
+                    <span class="city-icon">🏙️</span>
+                    <strong>Bangalore</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Mumbai')">
+                    <span class="city-icon">🌊</span>
+                    <strong>Mumbai</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Delhi')">
+                    <span class="city-icon">🏛️</span>
+                    <strong>Delhi NCR</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Pune')">
+                    <span class="city-icon">⛰️</span>
+                    <strong>Pune</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Hyderabad')">
+                    <span class="city-icon">🏰</span>
+                    <strong>Hyderabad</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Chennai')">
+                    <span class="city-icon">🏖️</span>
+                    <strong>Chennai</strong>
+                </div>
+                <div class="city-card" onclick="selectLocation('Kolkata')">
+                    <span class="city-icon">🌉</span>
+                    <strong>Kolkata</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ================= SCRIPT ================= -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
